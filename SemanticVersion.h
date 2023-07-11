@@ -3,7 +3,7 @@
   Simple library to parse and compare semantic version strings
   in the format "major.minor.patch", i.e. "1.23.456".
   
-  Version: 1.2.0
+  Version: 1.2.1
   
   License: GNU GENERAL PUBLIC LICENSE Version 3
   
@@ -130,7 +130,7 @@ private:
     
     if ((this->_versionNum[0] > other.major()) ||
        ((this->_versionNum[0] == other.major()) && (this->_versionNum[1] > other.minor())) ||
-       ((this->_versionNum[0] == other.major()) && (this->_versionNum[1] == other.minor()) && (this->_versionNum[2] == other.patch()))) return COMPARE_RESULT::MAJOR;
+       ((this->_versionNum[0] == other.major()) && (this->_versionNum[1] == other.minor()) && (this->_versionNum[2] > other.patch()))) return COMPARE_RESULT::MAJOR;
     
     return COMPARE_RESULT::MINOR;
   };
