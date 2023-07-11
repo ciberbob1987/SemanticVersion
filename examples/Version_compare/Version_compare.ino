@@ -19,6 +19,18 @@ void setup() {
   Serial.println();
   Serial.println();
   
+  String auxStr_0 = "1.1.1";
+  test_0.parseV(auxStr_0);
+  
+  Serial.println("---- Same object updated to " + auxStr_0 + "----");
+  Serial.print("Major: "); Serial.println(test_0.major());
+  Serial.print("Minor: "); Serial.println(test_0.minor());
+  Serial.print("Patch: "); Serial.println(test_0.patch());
+  Serial.println("---- constructor SemanticVersion() ----");
+  
+  Serial.println();
+  Serial.println();
+  
   String auxStr_1 = "";
   auxStr_1 = "1.2.3";
   SemanticVersion test_1(auxStr_1);

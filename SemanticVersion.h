@@ -3,7 +3,7 @@
   Simple library to parse and compare semantic version strings
   in the format "major.minor.patch", i.e. "1.23.456".
   
-  Version: 1.0.0
+  Version: 1.1.0
   
   License: GNU GENERAL PUBLIC LICENSE Version 3
   
@@ -26,9 +26,23 @@ public:
     _patch = 0;
   };
   
-  SemanticVersion(String versionStr) : SemanticVersion(versionStr.c_str()) {};
+  SemanticVersion(String versionStr) {
+    parseV(versionStr.c_str());
+  };
   
   SemanticVersion(const char* versionStr) {
+    parseV(versionStr);
+  };
+  
+  const uint32_t major() { return _major; };
+  const uint32_t minor() { return _minor; };
+  const uint32_t patch() { return _patch; };
+  
+  void parseV(String versionStr) {
+    parseV(versionStr.c_str());
+  };
+  
+  void parseV(const char* versionStr) {
     uint32_t tmpNum[3] = {0};
     
     char iChar = versionStr[0];
@@ -58,10 +72,6 @@ public:
     _minor = tmpNum[1];
     _patch = tmpNum[2];
   };
-  
-  const uint32_t major() { return _major; };
-  const uint32_t minor() { return _minor; };
-  const uint32_t patch() { return _patch; };
   
   bool operator>(SemanticVersion& other) {
     COMPARE_RESULT res = _compare(other);
