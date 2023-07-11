@@ -3,7 +3,7 @@
   Simple library to parse and compare semantic version strings
   in the format "major.minor.patch", i.e. "1.23.456".
   
-  Version: 1.1.0
+  Version: 1.2.0
   
   License: GNU GENERAL PUBLIC LICENSE Version 3
   
@@ -21,9 +21,9 @@ class SemanticVersion
 public:
   
   SemanticVersion() {
-    _major = 0;
-    _minor = 0;
-    _patch = 0;
+    _versionNum[0] = 0;
+    _versionNum[1] = 0;
+    _versionNum[2] = 0;
   };
   
   SemanticVersion(String versionStr) {
@@ -34,16 +34,20 @@ public:
     parseV(versionStr);
   };
   
-  const uint32_t major() { return _major; };
-  const uint32_t minor() { return _minor; };
-  const uint32_t patch() { return _patch; };
+  const uint16_t major() { return _versionNum[0]; };
+  const uint16_t minor() { return _versionNum[1]; };
+  const uint16_t patch() { return _versionNum[2]; };
+  
+  const char* getCString() { return _versionStr; };
   
   void parseV(String versionStr) {
     parseV(versionStr.c_str());
   };
   
   void parseV(const char* versionStr) {
-    uint32_t tmpNum[3] = {0};
+    _versionNum[0] = 0;
+    _versionNum[1] = 0;
+    _versionNum[2] = 0;
     
     char iChar = versionStr[0];
     uint8_t i=0, j=0;
@@ -58,7 +62,7 @@ public:
       
       if (versionStr[i] == '.' || i == vLen - 1) {
         if (j <= 2) {
-          tmpNum[j] = buffString.toInt();
+          _versionNum[j] = buffString.toInt();
           buffString = "";
           
           j++;
@@ -68,9 +72,7 @@ public:
       i++;
     }
     
-    _major = tmpNum[0];
-    _minor = tmpNum[1];
-    _patch = tmpNum[2];
+    _makeCString();
   };
   
   bool operator>(SemanticVersion& other) {
@@ -105,9 +107,14 @@ public:
   
 private:
   
-  uint32_t _major;
-  uint32_t _minor;
-  uint32_t _patch;
+  static const uint8_t _V_STR_MAX_LEN = 15;
+  
+  /* _versionNum[0] -> Major */
+  /* _versionNum[1] -> Minor */
+  /* _versionNum[2] -> Patch */
+  uint16_t _versionNum[3];
+  
+  char _versionStr[_V_STR_MAX_LEN];
   
   enum class COMPARE_RESULT : uint8_t {
     MINOR,
@@ -115,18 +122,29 @@ private:
     EQUAL
   };
   
-  const uint8_t _V_STR_MAX_LEN = 10;
   
   COMPARE_RESULT _compare(SemanticVersion& other) {
-    if ((this->_major == other.major()) &&
-        (this->_minor == other.minor()) &&
-        (this->_patch == other.patch()) ) return COMPARE_RESULT::EQUAL;
+    if ((this->_versionNum[0] == other.major()) &&
+        (this->_versionNum[1] == other.minor()) &&
+        (this->_versionNum[2] == other.patch()) ) return COMPARE_RESULT::EQUAL;
     
-    if ((this->_major > other.major()) ||
-       ((this->_major == other.major()) && (this->_minor > other.minor())) ||
-       ((this->_major == other.major()) && (this->_minor == other.minor()) && (this->_patch == other.patch()))) return COMPARE_RESULT::MAJOR;
+    if ((this->_versionNum[0] > other.major()) ||
+       ((this->_versionNum[0] == other.major()) && (this->_versionNum[1] > other.minor())) ||
+       ((this->_versionNum[0] == other.major()) && (this->_versionNum[1] == other.minor()) && (this->_versionNum[2] == other.patch()))) return COMPARE_RESULT::MAJOR;
     
     return COMPARE_RESULT::MINOR;
+  };
+  
+  void _makeCString() {
+    String aux = "";
+    
+    for (uint8_t i=0; i<3; i++) {
+      String buffer = String(_versionNum[i], DEC);
+      aux += buffer + ".";
+    }
+    
+    aux.remove(aux.length()-1, 1);
+    strncpy(_versionStr, aux.c_str(), _V_STR_MAX_LEN);
   };
 };
 #endif

@@ -11,9 +11,10 @@ void setup() {
   SemanticVersion test_0;
   
   Serial.println("---- constructor SemanticVersion() ----");
-  Serial.print("Major: "); Serial.println(test_0.major());
-  Serial.print("Minor: "); Serial.println(test_0.minor());
-  Serial.print("Patch: "); Serial.println(test_0.patch());
+  Serial.print("Major:  "); Serial.println(test_0.major());
+  Serial.print("Minor:  "); Serial.println(test_0.minor());
+  Serial.print("Patch:  "); Serial.println(test_0.patch());
+  Serial.print("String: "); Serial.println(test_0.getCString());
   Serial.println("---- constructor SemanticVersion() ----");
   
   Serial.println();
@@ -23,9 +24,10 @@ void setup() {
   test_0.parseV(auxStr_0);
   
   Serial.println("---- Same object updated to " + auxStr_0 + "----");
-  Serial.print("Major: "); Serial.println(test_0.major());
-  Serial.print("Minor: "); Serial.println(test_0.minor());
-  Serial.print("Patch: "); Serial.println(test_0.patch());
+  Serial.print("Major:  "); Serial.println(test_0.major());
+  Serial.print("Minor:  "); Serial.println(test_0.minor());
+  Serial.print("Patch:  "); Serial.println(test_0.patch());
+  Serial.print("String: "); Serial.println(test_0.getCString());
   Serial.println("---- constructor SemanticVersion() ----");
   
   Serial.println();
@@ -36,9 +38,10 @@ void setup() {
   SemanticVersion test_1(auxStr_1);
   
   Serial.println("---- " + auxStr_1 + " ----");
-  Serial.print("Major: "); Serial.println(test_1.major());
-  Serial.print("Minor: "); Serial.println(test_1.minor());
-  Serial.print("Patch: "); Serial.println(test_1.patch());
+  Serial.print("Major:  "); Serial.println(test_1.major());
+  Serial.print("Minor:  "); Serial.println(test_1.minor());
+  Serial.print("Patch:  "); Serial.println(test_1.patch());
+  Serial.print("String: "); Serial.println(test_1.getCString());
   Serial.println("---- " + auxStr_1 + " ----");
   
   Serial.println();
@@ -49,9 +52,10 @@ void setup() {
   SemanticVersion test_2(auxStr_2);
   
   Serial.println("---- " + auxStr_2 + " ----");
-  Serial.print("Major: "); Serial.println(test_2.major());
-  Serial.print("Minor: "); Serial.println(test_2.minor());
-  Serial.print("Patch: "); Serial.println(test_2.patch());
+  Serial.print("Major:  "); Serial.println(test_2.major());
+  Serial.print("Minor:  "); Serial.println(test_2.minor());
+  Serial.print("Patch:  "); Serial.println(test_2.patch());
+  Serial.print("String: "); Serial.println(test_2.getCString());
   Serial.println("---- " + auxStr_2 + " ----");
   
   Serial.println();
